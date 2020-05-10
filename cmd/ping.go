@@ -136,7 +136,7 @@ func prinPingResults(pinger *Pinger.PingConfig) {
 	// 100% default packet loss, i.e no packet was received.
 	var packetLossRatio float64 = 100.0
 	if pinger.Result.PacketLost > 0 {
-		packetLossRatio = float64(pinger.Result.PacketLost/pinger.Result.PacketSent) * 100
+		packetLossRatio = (float64(pinger.Result.PacketLost)/float64(pinger.Result.PacketSent)) * 100
 	}
 
 	stdDev := getStdDevRTT(pinger)
