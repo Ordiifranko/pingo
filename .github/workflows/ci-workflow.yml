@@ -33,5 +33,9 @@ jobs:
 
       - name: Build
         run: make build
-  
-  
+
+      - name: Upload built binary.
+        uses: actions/upload-artifact@v1
+        with:
+          name: ping
+          path: ./build/ping
