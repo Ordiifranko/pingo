@@ -36,6 +36,7 @@ func TestNewPing(t *testing.T) {
 		false,
 		1*time.Second,
 		false,
+		false,
 	)
 
 	assert.Equal(t, newPing.Target, mockPing.Target)
