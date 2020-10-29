@@ -103,9 +103,9 @@ func initFlags() error {
 	return nil
 }
 
-func signalHandler(pinger *Pinger.PingConfig, sig_chan chan os.Signal) {
-	<-sig_chan
-	prinPingResults(pinger)
+func signalHandler(pinger *Pinger.PingConfig, sigChan chan os.Signal) {
+	<-sigChan
+	printPingResults(pinger)
 	os.Exit(0)
 }
 
@@ -132,11 +132,11 @@ func getStdDevRTT(pinger *Pinger.PingConfig) time.Duration {
 }
 
 // Print statistics of the ping execution.
-func prinPingResults(pinger *Pinger.PingConfig) {
+func printPingResults(pinger *Pinger.PingConfig) {
 	// 100% default packet loss, i.e no packet was received.
 	var packetLossRatio float64 = 100.0
 	if pinger.Result.PacketLost > 0 {
-		packetLossRatio = (float64(pinger.Result.PacketLost)/float64(pinger.Result.PacketSent)) * 100
+		packetLossRatio = (float64(pinger.Result.PacketLost) / float64(pinger.Result.PacketSent)) * 100
 	}
 
 	stdDev := getStdDevRTT(pinger)
@@ -184,11 +184,11 @@ func main() {
 		Privilege,
 	)
 
-	signal_chan := make(chan os.Signal, 1)
-	signal.Notify(signal_chan,
+	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan,
 		syscall.SIGINT,
 	)
-	go signalHandler(pinger, signal_chan)
+	go signalHandler(pinger, signalChan)
 
 	start = time.Now()
 	_, err = pinger.Ping()
@@ -197,5 +197,5 @@ func main() {
 		flag.Usage()
 		os.Exit(1)
 	}
-	prinPingResults(pinger)
+	printPingResults(pinger)
 }

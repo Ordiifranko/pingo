@@ -35,7 +35,7 @@ func resolveAddrType(target string) (AddrType, net.IP) {
 }
 
 // resolveTargetAddress resolves targetName for the IP address.
-// DNS resolution onccurs if the target string is a hostname,
+// DNS resolution onccurs if the target string is a hostname, 	
 // otherwise the respective IPv4 or IPv6 address is returned.
 func resolveTargetAddress(networkType string, targetName string) (*net.IPAddr, error) {
 	targetIpAddr, err := net.ResolveIPAddr(networkType, targetName)
